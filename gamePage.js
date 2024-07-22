@@ -38,10 +38,11 @@ function initializeGame() {
         item.classList.remove('flipped', 'matched');
         item.innerHTML = ''; // Clear any existing values
     });
-    correctGuesses = 0;
-    wrongGuesses = 0;
-    clickedCards = [];
-    lockBoard = false;
+    const allCards = document.querySelectorAll('.item');
+    allCards.forEach(card => card.classList.add('flipped'));
+    setTimeout(() => {
+        allCards.forEach(card => card.classList.remove("flipped"));
+    }, 1250);
     updateProgressBar();
     updateGuesses();
 }
