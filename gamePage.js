@@ -29,79 +29,67 @@ function shuffle(array) {
     }
 }
 
-function initializeGame(){
+function initializeGame() {
     shuffle(cardItems);
-    let items = document.getElementsByClassName("item");
-    for (let i = 0; i < items.length; i++) {
-        items[i].dataset.value = cardItems[i].value;
-        items[i].dataset.flipped = cardItems[i].flipped;
-        items[i].addEventListener("click", function () {
-            flipCard(this);
-        });
-    }
-    const allCards = document.querySelectorAll('.item');
-    allCards.forEach(card => card.classList.add('flipped'));
-    setTimeout(() => {
-        allCards.forEach(card => card.classList.remove("flipped"));
-    }, 1250);
-    }
-}
-
-
-function flipCard(card) {
-    if (lockBoard || card.classList.contains('flipped') || card.classList.contains('matched')) {
-        return;
-    }
-
-    card.classList.add('flipped');
-
-    if (clickedCards.length === 0) {
-        clickedCards.push(card);
-    } else {
-        clickedCards.push(card);
-        lockBoard = true;
-
-        setTimeout(() => {
-            checkMatch();
-        }, 1000);
-    }
-}
-function checkMatch(){
-    let card1 = clickedCards[0];
-    let card2 = clickedCards[1];
-
-    if (card1.dataset.value === card2.dataset.value) {
-        card1.classList.add('matched');
-        card2.classList.add('matched');
-        correctGuesses++;
-    } else {
-        card1.classList.remove('flipped');
-        card2.classList.remove('flipped');
-        wrongGuesses++;
-    }
-
+    const items = document.querySelectorAll('.item');
+    items.forEach((item, index) => {
+        item.dataset.value = cardItems[index].value;
+        item.addEventListener('click', () => flipCard(item));
+        item.classList.remove('flipped', 'matched');
+        item.innerHTML = ''; // Clear any existing values
+    });
+    correctGuesses = 0;
+    wrongGuesses = 0;
     clickedCards = [];
     lockBoard = false;
-    redrawGrid();
+    updateProgressBar();
+    updateGuesses();
 }
 
-function redrawGrid() {
-    document.getElementById("correctValue").textContent = correctGuesses;
-    document.getElementById("incorrectValue").textContent = wrongGuesses;
+function flipCard(item) {
+    if (lockBoard || item.classList.contains('flipped') || item.classList.contains('matched')) return;
+    item.classList.add('flipped');
+    item.innerHTML = item.dataset.value;
+    clickedCards.push(item);
 
-    let numLeft = 0;
-    for (let item of items) {
-        if (item.classList.contains('flipped')) {
-            numLeft++;
+    if (clickedCards.length === 2) {
+        lockBoard = true; // Lock the board until cards are checked
+        setTimeout(checkForMatch, 500); // Adding delay for the flip animation
+    }
+}
+
+function checkForMatch() {
+    const [firstCard, secondCard] = clickedCards;
+    if (firstCard.dataset.value === secondCard.dataset.value) {
+        firstCard.classList.add('matched');
+        secondCard.classList.add('matched');
+        correctGuesses++;
+        if (correctGuesses === cardItems.length / 2) {
+            setTimeout(() => alert('Congratulations! You have matched all pairs!'), 500);
         }
+    } else {
+        firstCard.classList.remove('flipped');
+        secondCard.classList.remove('flipped');
+        firstCard.innerHTML = '';
+        secondCard.innerHTML = '';
+        wrongGuesses++;
     }
-
-    if (numLeft == items.length) {
-        document.getElementById("container").textContent = "Finished!!";
-    }
-
-    // Update the progress bar
-    let progress = (correctGuesses / (items.length / 2)) * 100;
-    document.querySelector('.progress-bar').style.width = progress + '%';
+    clickedCards = [];
+    lockBoard = false; // Unlock the board
+    updateGuesses();
+    updateProgressBar();
 }
-initializeGame();
+
+function updateGuesses() {
+    document.getElementById('correctValue').innerText = correctGuesses;
+    document.getElementById('incorrectValue').innerText = wrongGuesses;
+}
+
+function updateProgressBar() {
+    const progressBar = document.querySelector('.progress-bar');
+    const progress = (correctGuesses / (cardItems.length / 2)) * 100;
+    progressBar.style.width = progress + '%';
+    progressBar.setAttribute('aria-valuenow', progress);
+}
+
+window.addEventListener('load', initializeGame);
