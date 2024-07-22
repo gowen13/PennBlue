@@ -51,3 +51,4 @@ function checkSame(){
         clickedCards.append(this);
     }
 }
+
