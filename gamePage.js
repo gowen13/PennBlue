@@ -45,7 +45,7 @@ function initializeGame() {
     allCards.forEach(card => card.classList.add('flipped'));
     setTimeout(() => {
         allCards.forEach(card => card.classList.remove("flipped"));
-    }, 1000);
+    }, 1250);
 }
 
 function flipCard(card) {
