@@ -16,13 +16,13 @@
         <h2 id="levelNumber">#</h2>
     </div>
     <div id="menuBoard">
-        <div>
+        <div class="menuItems">
             <p>Timer:</p>
         </div>
-        <div>
+        <div class="menuItems">
             <p>Incorrect Guesses:</p>
         </div>
-        <div>
+        <div class="menuItems">
             <p>Correct Guesses:</p>
         </div>
     </div>
@@ -69,10 +69,27 @@
         align-items: center;
     }
     #menuBoard{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        padding: 15px;
-        font-size: larger;
+       display: grid;
+       grid-template-columns: repeat(3, 1fr);
+    }
+    .menuItems{
+        text-decoration: underline;
+        text-align: center;
+        border-style: solid;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 6px;
+    }
+    .container{
+        display: grid;
+        grid-template-columns: repeat(4, 125px);
+        grid-template-rows: repeat(4, 125px);
+        justify-content: center;
+    }
+    .item{
+        border-style: solid;
+        padding: 10px;
+        margin: 5px;
+        border-radius: 10px;
     }
 </style>
