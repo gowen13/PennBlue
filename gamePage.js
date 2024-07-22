@@ -77,7 +77,7 @@ function redrawGrid() {
     }
 
     if (numLeft == items.length) {
-        document.getElementById("container").textContent = "Finished!!";
+        document.querySelector(".container").textContent = "Finished!!";
     }
 
     // Update the progress bar
