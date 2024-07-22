@@ -38,13 +38,13 @@ function initializeGame() {
         item.classList.remove('flipped', 'matched');
         item.innerHTML = ''; // Clear any existing values
     });
+    updateProgressBar();
+    updateGuesses();
     const allCards = document.querySelectorAll('.item');
     allCards.forEach(card => card.classList.add('flipped'));
     setTimeout(() => {
         allCards.forEach(card => card.classList.remove("flipped"));
     }, 1250);
-    updateProgressBar();
-    updateGuesses();
 }
 
 function flipCard(item) {
