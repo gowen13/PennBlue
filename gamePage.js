@@ -20,7 +20,7 @@ let cardItems = [
 let correctGuesses = 0;
 let wrongGuesses = 0;
 let clickedCards = [];
-let lockBoard = false;
+let lockBoard = false; // To prevent clicking during animation
 
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -29,28 +29,22 @@ function shuffle(array) {
     }
 }
 
-function initializeGame() {
-    shuffle(cardItems);
-    let items = document.getElementsByClassName("item");
+shuffle(cardItems);
 
-    for (let i = 0; i < items.length; i++) {
-        items[i].dataset.value = cardItems[i].value;
-        items[i].dataset.flipped = cardItems[i].flipped;
-        items[i].addEventListener("click", function () {
-            flipCard(this);
-        });
-    }
+let items = document.getElementsByClassName("item");
 
-    const allCards = document.querySelectorAll('.item');
-    allCards.forEach(card => card.classList.add('flipped'));
-    setTimeout(() => {
-        allCards.forEach(card => card.classList.remove("flipped"));
-    }, 1250);
+for (let i = 0; i < items.length; i++) {
+    items[i].dataset.value = cardItems[i].value;
+    items[i].dataset.flipped = cardItems[i].flipped;
+    items[i].addEventListener("click", function () {
+        flipCard(this);
+    });
 }
 
 function flipCard(card) {
-    if (lockBoard) return;
-    if (card === clickedCards[0]) return;
+    if (lockBoard || card.classList.contains('flipped') || card.classList.contains('matched')) {
+        return;
+    }
 
     card.classList.add('flipped');
 
@@ -60,42 +54,46 @@ function flipCard(card) {
         clickedCards.push(card);
         lockBoard = true;
 
-        let card1 = clickedCards[0];
-        let card2 = clickedCards[1];
-
-        if (card1.dataset.value === card2.dataset.value) {
-            correctGuesses++;
-            resetBoard();
-        } else {
-            wrongGuesses++;
-            setTimeout(() => {
-                card1.classList.remove('flipped');
-                card2.classList.remove('flipped');
-                resetBoard();
-            }, 1000);
-        }
-
-        redrawGrid();
+        setTimeout(() => {
+            checkMatch();
+        }, 1000);
     }
 }
+function checkMatch(){
+    let card1 = clickedCards[0];
+    let card2 = clickedCards[1];
 
-function resetBoard() {
-    [clickedCards, lockBoard] = [[], false];
+    if (card1.dataset.value === card2.dataset.value) {
+        card1.classList.add('matched');
+        card2.classList.add('matched');
+        correctGuesses++;
+    } else {
+        card1.classList.remove('flipped');
+        card2.classList.remove('flipped');
+        wrongGuesses++;
+    }
+
+    clickedCards = [];
+    lockBoard = false;
+    redrawGrid();
 }
 
 function redrawGrid() {
     document.getElementById("correctValue").textContent = correctGuesses;
     document.getElementById("incorrectValue").textContent = wrongGuesses;
 
-    let numLeft = document.querySelectorAll('.item.flipped').length;
+    let numLeft = 0;
+    for (let item of items) {
+        if (item.classList.contains('flipped')) {
+            numLeft++;
+        }
+    }
 
     if (numLeft == items.length) {
-        document.querySelector(".container").textContent = "Finished!!";
+        document.getElementById("container").textContent = "Finished!!";
     }
 
     // Update the progress bar
     let progress = (correctGuesses / (items.length / 2)) * 100;
     document.querySelector('.progress-bar').style.width = progress + '%';
 }
-
-initializeGame();
