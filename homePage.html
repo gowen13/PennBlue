@@ -7,28 +7,84 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
 <body>
-    <div>
-        <h1>Memory Game</h1>
+    <div class="header">
+        <img id="pennLogo" src="https://dl.boxcloud.com/api/2.0/internal_files/552992181527/versions/586185831527/representations/png_paged_2048x2048/content/1.png?access_token=1!LsSPRROxIX6HPdIN6o3yIdUlqmm_t1MgZdGh6imTV7LuDX_ULZ5kozmFgGpjlBx7sczCjUGnnNeDKU_ZmeHvwis1H1Nn8SmayXjI_E7PC9ZJEZZm-5CuAXBetKovvemeP_pAmANWnjoRjxGfCzVPvis_AQnbn2WcFHndVbDLhVK9ONYLRtnq3Kb7oiEPu9kLmHriYmnnfh4kiZia-I1UvZRsIcFT3KL254jAbKpG06E6xyy9wbGa-n71z-VlOLA9LTnL8_gxhLAsdQ7bXGg6hOqIdsuk_7nOo-buTediIGwXHnPr4AkytWDd4MF1u4_sE_C3oU2OU7puJ8d6MkPKE3tcX4nNEhAXHRtsJayiajLdhKKfG8tmKCwiDpeFb6dgPkq7PyuR7fR_R84bUgliowqOQ8W2WMS8yDqCZK1jH7J4M0psYjkzPs1ZOtZln_H67RMOYTiObyQyEfPMfriIIIui_KFf9Zaa09YU5bPKUCkMPVwkH02vLEoXdX1IFKBLi1WC-e8rSyMAp5lSY6gqeGntm8qtcCgZEqU9VDkNNM0b-cZ5JM1s4t4mDzL1DLMWNI5PhYi1lMO55AoTFpV06A8NwV6aAqTW2438x6-gnV2PZejmDWoaKIhhXwbla9U-6EFRbbcddBEK4SzGYMTk4oGyzKMGB51o_fmQzuB1Yn5ZF6XGU0OqNl-cRxrB6DaScQ3ApoWVCpSv8ghXid7LXZTWCdpAQqT_nWBSaM4Triwb0O6Ulp0qcizUKHEMHbTLutOEOmIZytwpzCKoDWh0xP4s&shared_link=https%3A%2F%2Fupenn.app.box.com%2Fs%2Fy3qoa0bup8vxtpqt8t089y52wb3723xt&box_client_name=box-content-preview&box_client_version=2.109.0" alt="Penn Logo">
+        <h1 id="titleHead">Memory Game</h1>
     </div>
     <div>
-        <h2>Welcome to Penn's Blue Memory Game</h2>
+        <h2 class="welcomeHead">Welcome to <span class="pennBlue">Penn's Blue</span> Memory Game</h2>
     </div>
     <div>
         <p>In order to beat the game you must follow the rules</p>
-        <h3>Rules:</h3>
-        <ol>
-            <li>You will be shown the position of the cords briefly and then they will be flipped</li>
-            <li>You have to match the pairs together within the time limit.</li>
-            <li>Your points will be calculated from the correct pairs found and the nuber of incorrect pairs.</li>
-            <li>You will be moved to the next level if you get enough points.</li>
-        </ol>
+        <h3 class="welcomeHead">Rules:</h3>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox">
+              <label class="form-check-label" for="firstCheckbox">You will be shown the position of the cords briefly and then they will be flipped</label>
+            </li>
+            <li class="list-group-item">
+              <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckbox">
+              <label class="form-check-label" for="secondCheckbox">You have to match the pairs together within the time limit.</label>
+            </li>
+            <li class="list-group-item">
+              <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckbox">
+              <label class="form-check-label" for="thirdCheckbox">Your points will be calculated from the correct pairs found and the nuber of incorrect pairs.</label>
+            </li>
+            <li class="list-group-item">
+                <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckbox">
+                <label class="form-check-label" for="thirdCheckbox">You will be moved to the next level if you get enough points.</label>
+              </li>
+          </ul>
     </div>
     <div>
-        <span>
+        <p>
             Do you think you can beat the game?
-        </span>
+        </p>
         <a class="btn btn-primary" href="gamePage.html" role="button">Continue</a>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
+<style>
+    body {
+        font-family: sans-serif;
+        background-color: rgb(170, 201, 202);
+        background-image: src= "https://tenor.com/view/upenn-wharton-gif-14636206";
+    }
+    #titleHead{
+        text-align: center;
+        padding: 15px;
+        font-weight: bold;
+    }
+    .welcomeHead{
+        text-align: center;
+        font-weight: 600;
+    }
+    .pennBlue{
+        color: rgb(1, 31, 91);
+        text-decoration: underline;
+    }
+    p{
+        margin-top: 20px;
+        font-weight: 600;
+        text-align: center;
+    }
+    #pennLogo {
+        width: 250px; /* Adjust the width as needed */
+        height: auto;
+    }
+    .header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+        }
+    .list-group-item {
+            background-color: rgb(170, 201, 202); /* Match the body background color */
+            text-align: center;
+            font-weight: bold;
+    }
+    button{
+        align-self: center;
+    }
+</style>
 </html>
