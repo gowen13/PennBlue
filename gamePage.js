@@ -1,85 +1,86 @@
-
-let cardItems = [/*an array that contains "value" and "flipped" */
-    {value: "a", flipped: false},
-    {value: "a", flipped: false},
-    {value: "b", flipped: false},
-    {value: "b", flipped: false},
-    {value: "c", flipped: false},
-    {value: "c", flipped: false},
-    {value: "d", flipped: false},
-    {value: "d", flipped: false},
-    {value: "e", flipped: false},
-    {value: "e", flipped: false},
-    {value: "f", flipped: false},
-    {value: "f", flipped: false},
-    {value: "g", flipped: false},
-    {value: "g", flipped: false},
-    {value: "h", flipped: false},
-    {value: "h", flipped: false},
+let cardItems = [
+    { value: "a", flipped: false },
+    { value: "a", flipped: false },
+    { value: "b", flipped: false },
+    { value: "b", flipped: false },
+    { value: "c", flipped: false },
+    { value: "c", flipped: false },
+    { value: "d", flipped: false },
+    { value: "d", flipped: false },
+    { value: "e", flipped: false },
+    { value: "e", flipped: false },
+    { value: "f", flipped: false },
+    { value: "f", flipped: false },
+    { value: "g", flipped: false },
+    { value: "g", flipped: false },
+    { value: "h", flipped: false },
+    { value: "h", flipped: false },
 ];
 
 let correctGuesses = 0;
 let wrongGuesses = 0;
 let clickedCards = [];
 
-function shuffle(array){/*a shuffle function, that ensure all cards were randomly placed after we refresh the web page*/
-    for(let i = array.length - 1;i > 0; i--){
-        const j = Math.floor(Math.random() * (i+1));
-        [array[i], array[j]] = [array[j],array[i]];
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
     }
 }
 
-shuffle(cardItems);/*shuffle the web page before we start to flip them*/
+shuffle(cardItems);
 
-let items = document.getElementsByClassName("item");/*all things that contains "item" element, including all*/
+let items = document.getElementsByClassName("item");
 
-for(let i = 0; i< items.length; i++){
-    items[i].dataset.value = cardItems[i].value;/*the value of the card*/
-    items[i].dataset.flipped = cardItems[i].flipped;/*whether the card was being flipped*/
-    itmes[i].addEventListener("click", function(){/*when clicked, use flipcard mmethod*/
+for (let i = 0; i < items.length; i++) {
+    items[i].dataset.value = cardItems[i].value;
+    items[i].dataset.flipped = cardItems[i].flipped;
+    items[i].addEventListener("click", function () {
         flipCard(this);
     });
 }
 
 function flipCard(card) {
-    if (clickedCards.length === 1) {/*if some card has been clicked, and what we are clicking is the second card.*/
-        let card1 = clickedCards[0];/*get the first card we've clicked on*/
-        let card2 = card;/*get the second card(card we just clicked)*/
+    if (clickedCards.length === 1) {
+        let card1 = clickedCards[0];
+        let card2 = card;
 
-        if (card1.dataset.value === card2.dataset.value) {/*check whether two cards matches each other*/
-            card1.classList.add('flipped');/*let these cards being signed as "flipped"*/
+        if (card1.dataset.value === card2.dataset.value) {
+            card1.classList.add('flipped');
             card2.classList.add('flipped');
-            correctGuesses++;/*increase the number we guess correct*/
-        } else {/*if the two cards cannot match together correctly*/
+            correctGuesses++;
+        } else {
             setTimeout(() => {
                 card1.classList.remove('flipped');
                 card2.classList.remove('flipped');
-            }, 1000);/*let these two cards go back to the status that not being flipped after 1000ms*/
-            wrongGuesses++;/*increase the number we guess wrong*/
+            }, 1000);
+            wrongGuesses++;
         }
 
-        clickedCards = [];/*clear clickedCards array*/
+        clickedCards = [];
         redrawGrid();
-    } else {/*if no cards was being clicked before we clicked this one*/
-        card.classList.add('flipped');/*let the status of the card becomes clicked*/
-        clickedCards.push(card);/*add this clicked card into the clickedCards array*/
+    } else {
+        card.classList.add('flipped');
+        clickedCards.push(card);
     }
 }
 
+function redrawGrid() {
+    document.getElementById("correctValue").textContent = correctGuesses;
+    document.getElementById("incorrectValue").textContent = wrongGuesses;
 
-
-function redrawGrid(){/*is a function that update all things in canvas*/
-    document.getElementById("correctGuesses").textContent = correctGuesses;/*update the number of correctGuesses*/
-    docuemnt.getElementById("wrongGuesses").textContent = wrongGuesses;/*same as above*/
-
-    let numLeft = 0;/*calculate the number of flipped cards*/
-    for (let item of items){
-        if (items.classList.contains('flipped')){
+    let numLeft = 0;
+    for (let item of items) {
+        if (item.classList.contains('flipped')) {
             numLeft++;
         }
     }
 
-    if (numLeft == items.length){/*if all cards were flipped, then game over*/
+    if (numLeft == items.length) {
         document.getElementById("container").textContent = "Finished!!";
     }
+
+    // Update the progress bar
+    let progress = (correctGuesses / (items.length / 2)) * 100;
+    document.querySelector('.progress-bar').style.width = progress + '%';
 }
