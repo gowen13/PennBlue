@@ -57,7 +57,7 @@ function initializeGame() {
         updateProgressBar();
         updateGuesses();
         startTimer(); // Start the timer
-    }, 5000); // 5 seconds preview time
+    }, 3000); // 5 seconds preview time
 }
 
 function startTimer() {
