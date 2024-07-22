@@ -5,7 +5,7 @@ let cardItems = [
     { value: "b", flipped: false },
     { value: "c", flipped: false },
     { value: "c", flipped: false },
-    { value: "d", flipped: false }, 
+    { value: "d", flipped: false },
     { value: "d", flipped: false },
     { value: "e", flipped: false },
     { value: "e", flipped: false },
@@ -21,8 +21,6 @@ let correctGuesses = 0;
 let wrongGuesses = 0;
 let clickedCards = [];
 let lockBoard = false; // To prevent clicking during animation
-let timer; // Timer variable
-let timeRemaining = 60; // Initial time in seconds
 
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -40,26 +38,12 @@ function initializeGame() {
         item.classList.remove('flipped', 'matched');
         item.innerHTML = ''; // Clear any existing values
     });
+    correctGuesses = 0;
+    wrongGuesses = 0;
+    clickedCards = [];
+    lockBoard = false;
     updateProgressBar();
     updateGuesses();
-    const allCards = document.querySelectorAll('.item');
-    allCards.forEach(card => card.classList.add('flipped'));
-    setTimeout(() => {
-        allCards.forEach(card => card.classList.remove("flipped"));
-    }, 1250);
-}
-
-function startTimer() {
-    clearInterval(timer); // Clear any existing timer
-    timer = setInterval(() => {
-        timeRemaining--;
-        document.getElementById('clockTimer').innerText = timeRemaining;
-        if (timeRemaining <= 0) {
-            clearInterval(timer);
-            alert("Time's up! Game over.");
-            initializeGame(); // Optionally restart the game
-        }
-    }, 1000);
 }
 
 function flipCard(item) {
@@ -81,7 +65,6 @@ function checkForMatch() {
         secondCard.classList.add('matched');
         correctGuesses++;
         if (correctGuesses === cardItems.length / 2) {
-            clearInterval(timer);
             setTimeout(() => alert('Congratulations! You have matched all pairs!'), 500);
         }
     } else {
@@ -110,4 +93,3 @@ function updateProgressBar() {
 }
 
 window.addEventListener('load', initializeGame);
-
