@@ -33,3 +33,21 @@ function setValues(){
     return cardItems[ranIndex];
 }
 
+for (let item of items){
+    item.addEventListener("click", checkSame, false);
+}
+
+let clickedCards = [];
+
+function checkSame(){
+    if (clickedCards.length == 1){
+        let card1 = clickedCards[0];
+        let card2 = this;
+        if (card1.value == card2.value){
+            card1.flipped = true;
+            card2.flipped = true;
+        }
+    } else {
+        clickedCards.append(this);
+    }
+}
