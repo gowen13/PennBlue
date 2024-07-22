@@ -41,7 +41,7 @@ for (let item of items){
 }
 
 let clickedCards = [];
-function checkSame{
+function checkSame(){
     if (clickedCards.length == 1){
         let card1 = clickedCards[0];
         let card2 = this;
