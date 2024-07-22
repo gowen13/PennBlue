@@ -1,20 +1,20 @@
 let cardItems = [
-    {value: "cat", background: "cat.jpg", flipped: false},
-    {value: "cat", background: "cat.jpg", flipped: false},
-    {value: "dog", background: "dog.jpg", flipped: false},
-    {value: "dog", background: "dog.jpg", flipped: false},
-    {value: "bird", background: "bird.jpg", flipped: false},
-    {value: "bird", background: "bird.jpg", flipped: false},
-    {value: "hamster", background: "hamster.jpg", flipped: false},
-    {value: "hamster", background: "hamster.jpg", flipped: false},
-    {value: "strawberry", background: "strawberry.jpg", flipped: false},
-    {value: "strawberry", background: "strawberry.jpg", flipped: false},
-    {value: "tree", background: "tree.jpg", flipped: false},
-    {value: "tree", background: "tree.jpg", flipped: false},
-    {value: "water", background: "water.jpg", flipped: false},
-    {value: "water", background: "water.jpg", flipped: false},
-    {value: "light", background: "light.jpg", flipped: false},
-    {value: "light", background: "light.jpg", flipped: false},
+    {value: "a", flipped: false},
+    {value: "a", flipped: false},
+    {value: "b", flipped: false},
+    {value: "b", flipped: false},
+    {value: "c", flipped: false},
+    {value: "c", flipped: false},
+    {value: "d", flipped: false},
+    {value: "d", flipped: false},
+    {value: "e", flipped: false},
+    {value: "e", flipped: false},
+    {value: "f", flipped: false},
+    {value: "f", flipped: false},
+    {value: "g", flipped: false},
+    {value: "g", flipped: false},
+    {value: "h", flipped: false},
+    {value: "h", flipped: false},
 ];
 
 let correctGuesses = 0;
@@ -41,7 +41,7 @@ for (let item of items){
 }
 
 let clickedCards = [];
-function checkSame(){
+function checkSame{
     if (clickedCards.length == 1){
         let card1 = clickedCards[0];
         let card2 = this;
@@ -69,6 +69,7 @@ function redrawGrid(){
         if (item.flipped == true){
             numLeft++;
             item.backgroundColor = blue;
+
         }
     }
     if (numLeft == items.length){
