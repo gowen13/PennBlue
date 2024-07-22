@@ -5,7 +5,7 @@ let cardItems = [
     { value: "b", flipped: false },
     { value: "c", flipped: false },
     { value: "c", flipped: false },
-    { value: "d", flipped: false },
+    { value: "d", flipped: false }, 
     { value: "d", flipped: false },
     { value: "e", flipped: false },
     { value: "e", flipped: false },
