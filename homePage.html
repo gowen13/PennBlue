@@ -28,27 +28,41 @@
             </li>
             <li class="list-group-item">
               <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckbox">
-              <label class="form-check-label" for="thirdCheckbox">Your points will be calculated from the correct pairs found and the nuber of incorrect pairs.</label>
+              <label class="form-check-label" for="thirdCheckbox">Your points will be calculated from the correct pairs found and the number of incorrect pairs.</label>
             </li>
             <li class="list-group-item">
-                <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckbox">
-                <label class="form-check-label" for="thirdCheckbox">You will be moved to the next level if you get enough points.</label>
+                <input class="form-check-input me-1" type="checkbox" value="" id="fourthCheckbox">
+                <label class="form-check-label" for="fourthCheckbox">You will be moved to the next level if you get enough points.</label>
               </li>
           </ul>
     </div>
-    <div>
+    <div class="header">
         <p>
             Do you think you can beat the game?
         </p>
-        <a class="btn btn-primary" href="gamePage.html" role="button">Continue</a>
+        <a class="btn btn-primary" id="continueButton" href="gamePage.html" role="button">Continue</a>
+    </div>
+    <div class="header">
+        <h3>By Grace Owens, Marquez Browne-Rosario, Louis Liu</h3>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script>
+        document.getElementById('continueButton').addEventListener('click', function(event) {
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            for (var checkbox of checkboxes) {
+                if (!checkbox.checked) {
+                    alert('Please check all the rules before continuing.');
+                    event.preventDefault();
+                    return;
+                }
+            }
+        });
+    </script>
 </body>
 <style>
     body {
         font-family: sans-serif;
         background-color: rgb(170, 201, 202);
-        background-image: src= "https://tenor.com/view/upenn-wharton-gif-14636206";
     }
     #titleHead{
         text-align: center;
@@ -77,14 +91,19 @@
         flex-direction: column;
         align-items: center;
         padding: 15px;
-        }
+    }
     .list-group-item {
-            background-color: rgb(170, 201, 202); /* Match the body background color */
-            text-align: center;
-            font-weight: bold;
+        background-color: rgb(170, 201, 202); /* Match the body background color */
+        text-align: center;
+        font-weight: bold;
     }
     button{
         align-self: center;
+    }
+    #continueButton{
+        background-color: rgb(153,000,000);
+        font-weight: bold;
+        color: rgb(001,031, 091);
     }
 </style>
 </html>
