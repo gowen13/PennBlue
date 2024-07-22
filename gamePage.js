@@ -21,6 +21,8 @@ let correctGuesses = 0;
 let wrongGuesses = 0;
 let clickedCards = [];
 let lockBoard = false; // To prevent clicking during animation
+let timer; // Timer variable
+let timeRemaining = 60; // Initial time in seconds
 
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -47,6 +49,19 @@ function initializeGame() {
     }, 1250);
 }
 
+function startTimer() {
+    clearInterval(timer); // Clear any existing timer
+    timer = setInterval(() => {
+        timeRemaining--;
+        document.getElementById('clockTimer').innerText = timeRemaining;
+        if (timeRemaining <= 0) {
+            clearInterval(timer);
+            alert("Time's up! Game over.");
+            initializeGame(); // Optionally restart the game
+        }
+    }, 1000);
+}
+
 function flipCard(item) {
     if (lockBoard || item.classList.contains('flipped') || item.classList.contains('matched')) return;
     item.classList.add('flipped');
@@ -66,6 +81,7 @@ function checkForMatch() {
         secondCard.classList.add('matched');
         correctGuesses++;
         if (correctGuesses === cardItems.length / 2) {
+            clearInterval(timer);
             setTimeout(() => alert('Congratulations! You have matched all pairs!'), 500);
         }
     } else {
@@ -94,3 +110,4 @@ function updateProgressBar() {
 }
 
 window.addEventListener('load', initializeGame);
+
