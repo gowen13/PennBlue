@@ -36,18 +36,28 @@ function initializeGame() {
     const items = document.querySelectorAll('.item');
     items.forEach((item, index) => {
         item.dataset.value = cardItems[index].value;
-        item.addEventListener('click', () => flipCard(item));
-        item.classList.remove('flipped', 'matched');
-        item.innerHTML = ''; // Clear any existing values
+        item.classList.remove('flipped', 'matched', 'card-preview'); // Remove all relevant classes
+        item.classList.add('card-preview'); // Add the preview class
+        item.innerHTML = item.dataset.value; // Show the value for preview
     });
-    correctGuesses = 0;
-    wrongGuesses = 0;
-    clickedCards = [];
-    lockBoard = false;
-    timeRemaining = 60; // Reset the timer
-    updateProgressBar();
-    updateGuesses();
-    startTimer(); // Start the timer
+
+    // Show cards for preview period
+    setTimeout(() => {
+        items.forEach(item => {
+            item.classList.remove('card-preview'); // Remove preview class
+            item.addEventListener('click', () => flipCard(item)); // Add click event listener
+            item.innerHTML = ''; // Hide the value after preview
+        });
+
+        correctGuesses = 0;
+        wrongGuesses = 0;
+        clickedCards = [];
+        lockBoard = false;
+        timeRemaining = 60; // Reset the timer
+        updateProgressBar();
+        updateGuesses();
+        startTimer(); // Start the timer
+    }, 5000); // 5 seconds preview time
 }
 
 function startTimer() {
@@ -66,6 +76,7 @@ function startTimer() {
 function flipCard(item) {
     if (lockBoard || item.classList.contains('flipped') || item.classList.contains('matched')) return;
     item.classList.add('flipped');
+    item.classList.remove('card-preview');
     item.innerHTML = item.dataset.value;
     clickedCards.push(item);
 
@@ -88,6 +99,8 @@ function checkForMatch() {
     } else {
         firstCard.classList.remove('flipped');
         secondCard.classList.remove('flipped');
+        firstCard.classList.remove('card-preview');
+        secondCard.classList.remove('card-preview');
         firstCard.innerHTML = '';
         secondCard.innerHTML = '';
         wrongGuesses++;
