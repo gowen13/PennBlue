@@ -29,17 +29,24 @@ function shuffle(array) {
     }
 }
 
-shuffle(cardItems);
-
-let items = document.getElementsByClassName("item");
-
-for (let i = 0; i < items.length; i++) {
-    items[i].dataset.value = cardItems[i].value;
-    items[i].dataset.flipped = cardItems[i].flipped;
-    items[i].addEventListener("click", function () {
-        flipCard(this);
-    });
+function initializeGame(){
+    shuffle(cardItems);
+    let items = document.getElementsByClassName("item");
+    for (let i = 0; i < items.length; i++) {
+        items[i].dataset.value = cardItems[i].value;
+        items[i].dataset.flipped = cardItems[i].flipped;
+        items[i].addEventListener("click", function () {
+            flipCard(this);
+        });
+    }
+    const allCards = document.querySelectorAll('.item');
+    allCards.forEach(card => card.classList.add('flipped'));
+    setTimeout(() => {
+        allCards.forEach(card => card.classList.remove("flipped"));
+    }, 1250);
+    }
 }
+
 
 function flipCard(card) {
     if (lockBoard || card.classList.contains('flipped') || card.classList.contains('matched')) {
@@ -97,3 +104,4 @@ function redrawGrid() {
     let progress = (correctGuesses / (items.length / 2)) * 100;
     document.querySelector('.progress-bar').style.width = progress + '%';
 }
+initializeGame();
