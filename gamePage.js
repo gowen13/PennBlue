@@ -40,6 +40,13 @@ function shuffle(array) {
 
 function initializeGame() {
     shuffle(cardItems);
+    correctGuesses = 0;
+    wrongGuesses = 0;
+    clickedCards = [];
+    lockBoard = false;
+    timeRemaining = 60; // Reset the timer
+    updateProgressBar();
+    updateGuesses();
     const items = document.querySelectorAll('.item');
     items.forEach((item, index) => {
         item.dataset.value = cardItems[index].value;
@@ -60,14 +67,7 @@ function initializeGame() {
             item.addEventListener('click', () => flipCard(item)); // Add click event listener
             item.innerHTML = ''; // Hide the value after preview
         });
-
-        correctGuesses = 0;
-        wrongGuesses = 0;
-        clickedCards = [];
-        lockBoard = false;
-        timeRemaining = 60; // Reset the timer
-        updateProgressBar();
-        updateGuesses();
+        
         startTimer(); // Start the timer
     }, timer2); // 2.5 seconds preview time
 }
