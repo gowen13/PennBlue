@@ -20,6 +20,8 @@ let cardItems = [
 let correctGuesses = 0;
 let wrongGuesses = 0;
 let clickedCards = [];
+let level = 1;
+let timer2 = 2500;
 let lockBoard = false; // To prevent clicking during animation
 let timer; // Timer variable
 let timeRemaining = 60; // Initial time in seconds
@@ -42,6 +44,11 @@ function initializeGame() {
     });
 
     // Show cards for preview period
+    if (level == 2){
+        timer2 = 1250;
+    } else if (level == 3){
+        timer2 = 0;
+    }
     setTimeout(() => {
         items.forEach(item => {
             item.classList.remove('card-preview'); // Remove preview class
@@ -57,7 +64,7 @@ function initializeGame() {
         updateProgressBar();
         updateGuesses();
         startTimer(); // Start the timer
-    }, 2500); // 2.5 seconds preview time
+    }, timer2); // 2.5 seconds preview time
 }
 
 function startTimer() {
@@ -95,6 +102,12 @@ function checkForMatch() {
         if (correctGuesses === cardItems.length / 2) {
             clearInterval(timer);
             setTimeout(() => alert('Congratulations! You have matched all pairs!'), 500);
+            if (level < 3){
+                level++;
+                initializeGame();
+            } else{
+                alert("You've finished the game!");
+            }
         }
     } else {
         firstCard.classList.remove('flipped');
@@ -114,6 +127,7 @@ function checkForMatch() {
 function updateGuesses() {
     document.getElementById('correctValue').innerText = correctGuesses;
     document.getElementById('incorrectValue').innerText = wrongGuesses;
+    document.getElementById('levelNumber').innerText = level;
 }
 
 function updateProgressBar() {
