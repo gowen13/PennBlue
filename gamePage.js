@@ -1,3 +1,6 @@
+let correctGuessesTotal = localStorage.getItem('correctGuessesTotal') ? parseInt(localStorage.getItem('correctGuessesTotal')) : 0;
+let wrongGuessesTotal = localStorage.getItem('wrongGuessesTotal') ? parseInt(localStorage.getItem('wrongGuessesTotal')) : 0;
+
 let cardItems = [
     { value: "a", flipped: false },
     { value: "a", flipped: false },
@@ -18,9 +21,9 @@ let cardItems = [
 ];
 
 let correctGuesses = 0;
-let correctGuessesTotal = 0;
+// let correctGuessesTotal = 0;
 let wrongGuesses = 0;
-let wrongGuessesTotal = 0;
+// let wrongGuessesTotal = 0;
 let clickedCards = [];
 let level = 1;
 let timer2 = 2500;
@@ -105,7 +108,7 @@ function checkForMatch() {
     if (firstCard.dataset.value === secondCard.dataset.value) {
         firstCard.classList.add('matched');
         secondCard.classList.add('matched');
-        correctGuesses++;
+        correctGuesses += 2;
         if (correctGuesses === cardItems.length / 2) {
             clearInterval(timer);
             // setTimeout(() => alert('Congratulations! You have matched all pairs!'), 500);
@@ -152,6 +155,8 @@ function continueGame(){
         document.getElementById("continue").style.visibility = "hidden";
         correctGuessesTotal += correctGuesses;
         wrongGuessesTotal += wrongGuesses;
+        localStorage.setItem('correctGuessesTotal', correctGuessesTotal);
+        localStorage.setItem('wrongGuessesTotal', wrongGuessesTotal);
         level++;
         initializeGame();
     } else {
