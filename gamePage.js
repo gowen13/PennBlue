@@ -18,7 +18,9 @@ let cardItems = [
 ];
 
 let correctGuesses = 0;
+let correctGuessesTotal = 0;
 let wrongGuesses = 0;
+let wrongGuessesTotal = 0;
 let clickedCards = [];
 let level = 1;
 let timer2 = 2500;
@@ -67,7 +69,7 @@ function initializeGame() {
             item.addEventListener('click', () => flipCard(item)); // Add click event listener
             item.innerHTML = ''; // Hide the value after preview
         });
-        
+
         startTimer(); // Start the timer
     }, timer2); // 2.5 seconds preview time
 }
@@ -80,7 +82,7 @@ function startTimer() {
         if (timeRemaining <= 0) {
             clearInterval(timer);
             alert("Time's up! Game over.");
-            initializeGame(); // Optionally restart the game
+            // initializeGame(); // Optionally restart the game
         }
     }, 1000);
 }
@@ -148,10 +150,11 @@ window.addEventListener('load', initializeGame);
 function continueGame(){
     if (level < 3){
         document.getElementById("continue").style.visibility = "hidden";
+        correctGuessesTotal += correctGuesses;
+        wrongGuessesTotal += wrongGuesses;
         level++;
         initializeGame();
     } else {
-        continueButton.style.visibility = "hidden";
-        document.getElementById("spanContinue").textContent = "You've finished the game!";
+        window.location.href = 'endPage.html'
     }
 }
