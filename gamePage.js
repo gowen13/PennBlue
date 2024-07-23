@@ -117,7 +117,7 @@ function checkForMatch() {
     if (firstCard.dataset.value === secondCard.dataset.value) {
         firstCard.classList.add('matched');
         secondCard.classList.add('matched');
-        correctGuesses += 2;
+        correctGuesses ++;
         if (correctGuesses === cardItems.length / 2) {
             clearInterval(timer);
             // setTimeout(() => alert('Congratulations! You have matched all pairs!'), 500);
@@ -162,7 +162,7 @@ window.addEventListener('load', initializeGame);
 function continueGame(){
     if (level < 3){
         document.getElementById("continue").style.visibility = "hidden";
-        correctGuessesTotal += correctGuesses;
+        correctGuessesTotal += (correctGuesses * 2);
         wrongGuessesTotal += wrongGuesses;
         localStorage.setItem('correctGuessesTotal', correctGuessesTotal);
         localStorage.setItem('wrongGuessesTotal', wrongGuessesTotal);
