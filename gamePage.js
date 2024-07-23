@@ -19,6 +19,7 @@ let cardItems = [
     { value: "h", flipped: false },
     { value: "h", flipped: false },
 ];
+
 let correctGuesses = 0;
 let wrongGuesses = 0;
 let clickedCards = [];
@@ -41,12 +42,15 @@ function shuffle(array) {
     }
 }
 
-function togglePause(){
+function togglePause() {
     paused = !paused;
+    const items = document.querySelectorAll('.item');
     if (paused) {
         clearInterval(timer);
+        items.forEach(item => item.classList.add('disabled')); // Add disabled class to all cards
     } else {
         startTimer();
+        items.forEach(item => item.classList.remove('disabled')); // Remove disabled class from all cards
     }
 }
 
@@ -62,7 +66,7 @@ function initializeGame() {
     const items = document.querySelectorAll('.item');
     items.forEach((item, index) => {
         item.dataset.value = cardItems[index].value;
-        item.classList.remove('flipped', 'matched', 'card-preview'); // Remove all relevant classes
+        item.classList.remove('flipped', 'matched', 'card-preview', 'disabled'); // Remove all relevant classes
         item.classList.add('card-preview'); // Add the preview class
         item.innerHTML = item.dataset.value; // Show the value for preview
     });
@@ -92,6 +96,7 @@ function startTimer() {
             document.getElementById('clockTimer').innerText = timeRemaining;
             if (timeRemaining <= 0) {
                 clearInterval(timer);
+                document.querySelectorAll('.item').forEach(item => item.classList.add('disabled'));
                 alert("Time's up! Game over.");
                 // initializeGame(); // Optionally restart the game
             }
@@ -100,7 +105,7 @@ function startTimer() {
 }
 
 function flipCard(item) {
-    if (lockBoard || item.classList.contains('flipped') || item.classList.contains('matched')) return;
+    if (lockBoard || item.classList.contains('flipped') || item.classList.contains('matched') || item.classList.contains('disabled')) return;
     item.classList.add('flipped');
     item.classList.remove('card-preview');
     item.innerHTML = item.dataset.value;
@@ -117,16 +122,9 @@ function checkForMatch() {
     if (firstCard.dataset.value === secondCard.dataset.value) {
         firstCard.classList.add('matched');
         secondCard.classList.add('matched');
-        correctGuesses ++;
+        correctGuesses++;
         if (correctGuesses === cardItems.length / 2) {
             clearInterval(timer);
-            // setTimeout(() => alert('Congratulations! You have matched all pairs!'), 500);
-            // if (level < 3){
-            //     level++;
-            //     initializeGame();
-            // } else{
-            //     alert("You've finished the game!");
-            // }
             document.getElementById("continue").style.visibility = "visible";
         }
     } else {
@@ -162,13 +160,13 @@ window.addEventListener('load', initializeGame);
 function continueGame(){
     if (level < 3){
         document.getElementById("continue").style.visibility = "hidden";
-        correctGuessesTotal += (correctGuesses * 2);
+        correctGuessesTotal += correctGuesses;
         wrongGuessesTotal += wrongGuesses;
         localStorage.setItem('correctGuessesTotal', correctGuessesTotal);
         localStorage.setItem('wrongGuessesTotal', wrongGuessesTotal);
         level++;
         initializeGame();
     } else {
-        window.location.href = 'endPage.html'
+        window.location.href = 'endPage.html';
     }
 }
