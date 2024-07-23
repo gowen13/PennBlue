@@ -25,6 +25,11 @@ let timer2 = 2500;
 let lockBoard = false; // To prevent clicking during animation
 let timer; // Timer variable
 let timeRemaining = 60; // Initial time in seconds
+let continueButton = document.getElementById("continueBut");
+
+continueButton.addEventListener('click', continueGame);
+
+document.getElementById("continue").style.visibility = "hidden";
 
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -101,13 +106,14 @@ function checkForMatch() {
         correctGuesses++;
         if (correctGuesses === cardItems.length / 2) {
             clearInterval(timer);
-            setTimeout(() => alert('Congratulations! You have matched all pairs!'), 500);
-            if (level < 3){
-                level++;
-                initializeGame();
-            } else{
-                alert("You've finished the game!");
-            }
+            // setTimeout(() => alert('Congratulations! You have matched all pairs!'), 500);
+            // if (level < 3){
+            //     level++;
+            //     initializeGame();
+            // } else{
+            //     alert("You've finished the game!");
+            // }
+            document.getElementById("continue").style.visibility = "visible";
         }
     } else {
         firstCard.classList.remove('flipped');
@@ -138,3 +144,14 @@ function updateProgressBar() {
 }
 
 window.addEventListener('load', initializeGame);
+
+function continueGame(){
+    if (level < 3){
+        document.getElementById("continue").style.visibility = "hidden";
+        level++;
+        initializeGame();
+    } else {
+        continueButton.style.visibility = "hidden";
+        document.getElementById("spanContinue").textContent = "You've finished the game!";
+    }
+}
