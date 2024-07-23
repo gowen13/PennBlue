@@ -19,11 +19,8 @@ let cardItems = [
     { value: "h", flipped: false },
     { value: "h", flipped: false },
 ];
-
 let correctGuesses = 0;
-// let correctGuessesTotal = 0;
 let wrongGuesses = 0;
-// let wrongGuessesTotal = 0;
 let clickedCards = [];
 let level = 1;
 let timer2 = 2500;
@@ -31,6 +28,7 @@ let lockBoard = false; // To prevent clicking during animation
 let timer; // Timer variable
 let timeRemaining = 60; // Initial time in seconds
 let continueButton = document.getElementById("continueBut");
+let paused = false;
 
 continueButton.addEventListener('click', continueGame);
 
@@ -40,6 +38,15 @@ function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+function togglePause(){
+    paused = !paused;
+    if (paused) {
+        clearInterval(timer);
+    } else {
+        startTimer();
     }
 }
 
@@ -80,12 +87,14 @@ function initializeGame() {
 function startTimer() {
     clearInterval(timer); // Clear any existing timer
     timer = setInterval(() => {
-        timeRemaining--;
-        document.getElementById('clockTimer').innerText = timeRemaining;
-        if (timeRemaining <= 0) {
-            clearInterval(timer);
-            alert("Time's up! Game over.");
-            // initializeGame(); // Optionally restart the game
+        if (!paused) {
+            timeRemaining--;
+            document.getElementById('clockTimer').innerText = timeRemaining;
+            if (timeRemaining <= 0) {
+                clearInterval(timer);
+                alert("Time's up! Game over.");
+                // initializeGame(); // Optionally restart the game
+            }
         }
     }, 1000);
 }
