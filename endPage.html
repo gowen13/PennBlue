@@ -28,6 +28,9 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <script src="gamePage.js"></script>
+    <div id="backButtons">
+        <a class="btn btn-primary" class="levelUpButton" href="homePage.html" role="button">Play Again</a>
+    </div>
 </body>
 </html>
 
@@ -85,63 +88,21 @@
         padding: 7px;
         margin: 6px;
     }
-    .container {
-        display: grid;
-        grid-template-columns: repeat(4, 7em);
-        grid-template-rows: repeat(4, 7em);
-        justify-content: center;
-    }
-    .item {
-        border-style: solid;
-        padding: 10px;
-        margin: 5px;
-        border-radius: 10px;
-        background-color: rgb(153, 0, 0);
-    }
     #webpageTitle a {
         text-decoration: none;
         color: black;
         font-weight: bold;
     }
-    .progress {
-        width: 40em;
-        margin: 0% auto;
-        background-color: white;
-        --bs-progress-bar-bg: rgb(153, 0, 0);
-        border-style: solid;
-        border-width: 2px;
-    }
-    .flipped {
-        background-color: lightblue;
-    }
-    .matched {
-        background-color: lightblue;
-        pointer-events: none; /* Prevents further clicks */
-    }
-    .item{
-        font-size: xx-large;
-        text-align: center;
-        justify-items: center;
-        font-weight: bold;
-    }
-    .card-preview {
-    background-color: #f0f0f0; /* Example color for preview, adjust as needed */
-}
 
-    /* Background color for matched cards */
-    .card-matched {
-        background-color: #d4edda; /* Example color for matched cards, adjust as needed */
-    }
-
-    /* Background color for flipped cards */
-    .card-flipped {
-        background-color: #e2e3e5; /* Example color for flipped cards, adjust as needed */
-    }
-
-    #continueButtons .btn {
+    #backButtons .btn {
         background-color: rgb(153, 0, 0);
         font-weight: bold;
         color: rgb(232, 220, 220);
+    }
+    #backButtons{
+        margin: auto;
+        align-items: center;
+        justify-content: center;
     }
 
 </style> 
