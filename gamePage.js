@@ -48,11 +48,11 @@ function togglePause() {
     if (paused) {
         clearInterval(timer);
         items.forEach(item => item.classList.add('disabled')); // Add disabled class to all cards
-        document.getElementsByClassName('pauseButton')[0].textContent = 'Pause';
+        document.getElementsByClassName('pauseButton')[0].textContent = 'Resume';
     } else {
         startTimer();
         items.forEach(item => item.classList.remove('disabled')); // Remove disabled class from all cards
-        document.getElementsByClassName('pauseButton')[0].textContent = 'Resume';
+        document.getElementsByClassName('pauseButton')[0].textContent = 'Pause';
     }
 }
 
