@@ -30,6 +30,7 @@ let timer; // Timer variable
 let timeRemaining = 60; // Initial time in seconds
 let continueButton = document.getElementById("continueBut");
 let paused = false;
+let gameOver = false; // Flag to indicate if the game is over
 
 continueButton.addEventListener('click', continueGame);
 
@@ -43,6 +44,7 @@ function shuffle(array) {
 }
 
 function togglePause() {
+    if (gameOver) return; // Prevent pausing/resuming if the game is over
     paused = !paused;
     const items = document.querySelectorAll('.item');
     if (paused) {
@@ -62,6 +64,7 @@ function initializeGame() {
     wrongGuesses = 0;
     clickedCards = [];
     lockBoard = false;
+    gameOver = false; // Reset gameOver flag
     timeRemaining = 60; // Reset the timer
     updateProgressBar();
     updateGuesses();
@@ -99,6 +102,8 @@ function startTimer() {
             if (timeRemaining <= 0) {
                 clearInterval(timer);
                 document.querySelectorAll('.item').forEach(item => item.classList.add('disabled'));
+                gameOver = true; // Set gameOver flag
+                document.getElementsByClassName('pauseButton')[0].disabled = true; // Disable the pause button
                 alert("Time's up! Game over.");
                 // initializeGame(); // Optionally restart the game
             }
@@ -127,6 +132,8 @@ function checkForMatch() {
         correctGuesses++;
         if (correctGuesses === cardItems.length / 2) {
             clearInterval(timer);
+            gameOver = true; // Set gameOver flag
+            document.getElementsByClassName('pauseButton')[0].disabled = true; // Disable the pause button
             document.getElementById("continue").style.visibility = "visible";
         }
     } else {
