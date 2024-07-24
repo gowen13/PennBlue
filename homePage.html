@@ -57,6 +57,14 @@
                 }
             }
         });
+        let correctGuessesTotal = localStorage.getItem('correctGuessesTotal') ? parseInt(localStorage.getItem('correctGuessesTotal')) : 0;
+        let wrongGuessesTotal = localStorage.getItem('wrongGuessesTotal') ? parseInt(localStorage.getItem('wrongGuessesTotal')) : 0;
+
+        correctGuessesTotal = 0;
+        wrongGuessesTotal = 0;
+
+        localStorage.setItem('correctGuessesTotal', correctGuessesTotal);
+        localStorage.setItem('wrongGuessesTotal', wrongGuessesTotal);
     </script>
 </body>
 <style>

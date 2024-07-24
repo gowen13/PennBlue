@@ -169,6 +169,12 @@ function continueGame(){
         level++;
         initializeGame();
     } else {
+        if (level == 3){
+            correctGuessesTotal += correctGuesses;
+            wrongGuessesTotal += wrongGuesses;
+            localStorage.setItem('correctGuessesTotal', correctGuessesTotal);
+            localStorage.setItem('wrongGuessesTotal', wrongGuessesTotal);
+        }
         window.location.href = 'endPage.html';
     }
 }
