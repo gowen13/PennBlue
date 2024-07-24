@@ -65,6 +65,10 @@
 
         localStorage.setItem('correctGuessesTotal', correctGuessesTotal);
         localStorage.setItem('wrongGuessesTotal', wrongGuessesTotal);
+        
+        let bestScore = localStorage.getItem('bestScore') ? parseInt(localStorage.getItem('bestScore')) : 0;
+
+
     </script>
 </body>
 <style>
