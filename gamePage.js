@@ -105,7 +105,6 @@ function startTimer() {
                 gameOver = true; // Set gameOver flag
                 document.getElementsByClassName('pauseButton')[0].disabled = true; // Disable the pause button
                 alert("Time's up! Game over.");
-                // initializeGame(); // Optionally restart the game
             }
         }
     }, 1000);
@@ -175,6 +174,7 @@ function continueGame(){
         localStorage.setItem('wrongGuessesTotal', wrongGuessesTotal);
         level++;
         initializeGame();
+        document.getElementsByClassName('pauseButton')[0].disabled = false; // Re-enable the pause button
     } else {
         if (level == 3){
             correctGuessesTotal += correctGuesses;
