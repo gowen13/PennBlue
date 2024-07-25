@@ -36,6 +36,7 @@ continueButton.addEventListener('click', continueGame);
 
 document.getElementById("continue").style.visibility = "hidden";
 
+//the shuffle function: as it's a function, it allows us to call it every time we change levels or restart the game
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -43,6 +44,8 @@ function shuffle(array) {
     }
 }
 
+
+//if a card is 'disabled' the user can't click it, meaning the user can't cheat the timer by clicking cards even when the clock isn't counting down
 function togglePause() {
     if (gameOver) return; // Prevent pausing/resuming if the game is over
     paused = !paused;
@@ -58,6 +61,7 @@ function togglePause() {
     }
 }
 
+//this sets up the game, shows the user the cards for a set time interval depending on the level, and resets all variables
 function initializeGame() {
     shuffle(cardItems);
     correctGuesses = 0;
@@ -93,6 +97,7 @@ function initializeGame() {
     }, timer2); // 2.5 seconds preview time
 }
 
+//this is where the timer is reset
 function startTimer() {
     clearInterval(timer); // Clear any existing timer
     timer = setInterval(() => {
@@ -110,6 +115,8 @@ function startTimer() {
     }, 1000);
 }
 
+//function that sets the card's class to 'flipped' and adds the card to our clickedCards array. 
+//If clickedCards contains two cards, the cards are checked to see if they match each other
 function flipCard(item) {
     if (lockBoard || item.classList.contains('flipped') || item.classList.contains('matched') || item.classList.contains('disabled')) return;
     item.classList.add('flipped');
@@ -123,6 +130,9 @@ function flipCard(item) {
     }
 }
 
+//this function checks if clickedCards contains a match, the class matched gets added to the cards
+//correctGuesses goes up by 1 if they're a match, and wrongGuesses goes up by one if they aren't
+//the board also gets locked so that no more than two cards get considered 'matched' at one time
 function checkForMatch() {
     const [firstCard, secondCard] = clickedCards;
     if (firstCard.dataset.value === secondCard.dataset.value) {
@@ -150,12 +160,14 @@ function checkForMatch() {
     updateProgressBar();
 }
 
+//this changes the number that the user sees for correctGuesses, wrongGuesses, and levelNumber
 function updateGuesses() {
     document.getElementById('correctValue').innerText = correctGuesses;
     document.getElementById('incorrectValue').innerText = wrongGuesses;
     document.getElementById('levelNumber').innerText = level;
 }
 
+//this updates the progress bar as the user gets matches
 function updateProgressBar() {
     const progressBar = document.querySelector('.progress-bar');
     const progress = (correctGuesses / (cardItems.length / 2)) * 100;
@@ -165,6 +177,7 @@ function updateProgressBar() {
 
 window.addEventListener('load', initializeGame);
 
+//this updates the level and adds to both correctGuessesTotal and wrongGuessesTotal
 function continueGame(){
     if (level < 3){
         document.getElementById("continue").style.visibility = "hidden";
